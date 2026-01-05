@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackline Intelligence | Services</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Lexend+Deca:wght@700&display=swap" rel="stylesheet">
+     <link rel="icon" type="image/png" href="https://i.postimg.cc/tC7PgF22/image.png">
+    <style>
+        :root {
+            --bg-dark: #0a0a0b;
+            --bg-card: #141417;
+            --accent-blue: #2563eb;
+            --text-main: #e2e8f0;
+            --text-dim: #94a3b8;
+            --border-color: #27272a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+ nav {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 10, 11, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap; 
+            gap: 15px; 
+        }
+        .logo {
+            font-family: 'Lexend Deca', sans-serif;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .logo span { color: var(--accent-blue); }
+
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        .lang-switch {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            border-radius: 4px;
+            margin-left: 20px;
+        }
+
+        main { padding: 60px 8%; }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 640px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            transition: all 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .card h3 {
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+
+        .tag-btn {
+            display: inline-block;
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            border-radius: 20px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background: transparent;
+            margin-bottom: 10px;
+            
+        }
+
+        .tag-btn:hover {
+            background: var(--accent-blue);
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .lang-ms { display: none; }
+        body.ms-active .lang-en { display: none; }
+        body.ms-active .lang-ms { display: block; }
+
+        footer {
+            padding: 40px 8%;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        #textModal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 2000;
+            padding: 20px;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        #modalContent {
+            background: var(--bg-card);
+            padding: 50px 30px;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            font-size: 1.8rem;
+            position: relative;
+            color: var(--text-main);
+            transform: scale(0.7);
+            opacity: 0;
+            animation: fadeInScale 0.3s ease forwards;
+        }
+
+        #modalContent span.closeBtn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        #modalText img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto 30px;
+            border-radius: 8px;
+        }
+
+        @keyframes fadeInScale {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">BLACKLINE <span>INTELLIGENCE</span></div>
+    <div class="nav-links">
+        <a href="about.html" class="lang-en">About Us</a><a href="about.html" class="lang-ms">Tentang Kami</a>
+        <a href="services.html" class="lang-en">Services</a><a href="services.html" class="lang-ms">Perkhidmatan</a>
+        <a href="organizational.html" class="lang-en">Organization</a><a href="organization.html" class="lang-ms">Organisasi</a>
+        <a href="gallery.html" class="lang-en">Gallery</a><a href="gallery.html" class="lang-ms">Galeri</a>
+        <a href="payment.html" class="lang-en">Payment</a><a href="payment.html" class="lang-ms">Bayaran</a>
+        <a href="contact.html" class="lang-en">Contact</a><a href="contact.html" class="lang-ms">Hubungi</a>
+        <button class="lang-switch" onclick="toggleLanguage()">BM / EN</button>
+    </div>
+</nav>
+
+<main id="services">
+    <div class="section-title">
+        <h1 class="lang-en">Our Services</h1>
+        <h1 class="lang-ms">Perkhidmatan Kami</h1>
+    </div>
+
+    <div class="grid">
+
+        
+         <div class="card">
+            <h3 class="lang-en">Background Investigation</h3>
+            <h3 class="lang-ms">Siasatan Latar Belakang</h3>
+            <p class="lang-en">Verification of criminal records, employment history and financial status.</p>
+            <p class="lang-ms">Pengesahan rekod jenayah, sejarah pekerjaan dan status kewangan.</p>
+            <button class="tag-btn lang-en" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.dx0cuPLQjDofa-m1w81xPQHaDt?w=314&h=175&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3;Background Investigation Image&quot;>A comprehensive background check to verify an individual’s history. This includes criminal record screening, employment verification, financial status checks and identity confirmation to help clients make informed decisions.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.dx0cuPLQjDofa-m1w81xPQHaDt?w=314&h=175&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Siasatan Latar Belakang\'>Pemeriksaan latar belakang yang menyeluruh untuk mengesahkan sejarah individu. Ini termasuk pemeriksaan rekod jenayah, pengesahan pekerjaan, semakan status kewangan dan pengesahan identiti untuk membantu pelanggan membuat keputusan yang tepat.')">TEKAN BUTANG INI</button>
+        </div>
+
+        
+        <div class="card">
+            <h3 class="lang-en">Surveillance Services</h3>
+            <h3 class="lang-ms">Perkhidmatan Pengawasan</h3>
+            <p class="lang-en">Discreet 8-hour monitoring with photo and video evidence.</p>
+            <p class="lang-ms">Pemantauan 8 jam secara rahsia dengan bukti gambar dan video.</p>
+            <button class="tag-btn lang-en" onclick="showModal ('<br><img src=&quot;https://th.bing.com/th/id/OIP.detMtdifaNYXBj8LdjXfDwHaE8?w=241&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Surveillance Image&quot;>Discreet physical or mobile monitoring conducted over an 8-hour period. Evidence is collected through high-quality photos and videos to document activities, movements and interactions while maintaining strict confidentiality.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal ('<br><img src=&quot;https://th.bing.com/th/id/OIP.detMtdifaNYXBj8LdjXfDwHaE8?w=241&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Pengawasan\'>Pemantauan fizikal atau bergerak secara rahsia dijalankan selama 8 jam. Bukti dikumpulkan melalui gambar dan video berkualiti tinggi untuk mendokumentasikan aktiviti, pergerakan dan interaksi sambil mengekalkan kerahsiaan sepenuhnya.')">TEKAN BUTANG INI</button>
+        </div>
+
+        
+        <div class="card">
+            <h3 class="lang-en">Matrimonial Investigation</h3>
+            <h3 class="lang-ms">Siasatan Perkahwinan</h3>
+            <p class="lang-en">Confidential infidelity checks and lifestyle verification.</p>
+            <p class="lang-ms">Pemeriksaan kesetiaan dan pengesahan gaya hidup secara rahsia.</p>
+            <button class="tag-btn lang-en" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.rykDQoQDxTBlZPCrUgSNQAHaE8?w=265&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Matrimonial Image&quot;>Confidential investigations related to marital or relationship concerns. This service focuses on infidelity checks, lifestyle verification, social behavior monitoring and identifying suspicious activities without alerting the subject.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.rykDQoQDxTBlZPCrUgSNQAHaE8?w=265&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Siasatan Perkahwinan\'>Penyiasatan rahsia berkaitan isu perkahwinan atau hubungan. Perkhidmatan ini menumpukan kepada pemeriksaan kesetiaan, pengesahan gaya hidup, pemantauan tingkah laku sosial dan mengenal pasti aktiviti mencurigakan tanpa memberitahu subjek.')">TEKAN BUTANG INI</button>
+        </div>
+
+        
+        <div class="card">
+            <h3 class="lang-en">Corporate Investigation</h3>
+            <h3 class="lang-ms">Siasatan Korporat</h3>
+            <p class="lang-en">Fraud detection and employee misconduct investigations.</p>
+            <p class="lang-ms">Pengesanan penipuan dan penyiasatan salah laku pekerja.</p>
+            <button class="tag-btn lang-en" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.T3_xJrU4_1numeCOxYe5OQHaFA?w=253&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Corporate Image&quot;>Professional investigations for businesses and organizations. This includes fraud detection, employee misconduct inquiries, background verification for staff, internal theft investigations and protection of company interests.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.T3_xJrU4_1numeCOxYe5OQHaFA?w=253&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Siasatan Korporat\'>Penyiasatan profesional untuk perniagaan dan organisasi. Ini termasuk pengesanan penipuan, penyiasatan salah laku pekerja, pengesahan latar belakang kakitangan, penyiasatan kecurian dalaman dan perlindungan kepentingan syarikat.')">TEKAN BUTANG INI</button>
+        </div>
+
+        
+        <div class="card">
+            <h3 class="lang-en">Cyber Investigation</h3>
+            <h3 class="lang-ms">Siasatan Siber</h3>
+            <p class="lang-en">Digital forensics, online fraud and cyberstalking investigations.</p>
+            <p class="lang-ms">Forensik digital, penipuan dalam talian dan penyiasatan gangguan siber.</p>
+            <button class="tag-btn lang-en" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.BqWzwJR_mEUhad4JtfaBIAHaHa?w=140&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Cyber Image&quot;>Digital and online investigations involving cyber forensics. This service covers online fraud detection, cyberstalking investigations, data tracing, social media analysis and recovery of digital evidence.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.BqWzwJR_mEUhad4JtfaBIAHaHa?w=140&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Siasatan Siber\'>Penyiasatan digital dan dalam talian yang melibatkan forensik siber. Perkhidmatan ini merangkumi pengesanan penipuan dalam talian, penyiasatan gangguan siber, penjejakan data, analisis media sosial dan pemulihan bukti digital.')">TEKAN BUTANG INI</button>
+        </div>
+
+       
+        <div class="card">
+            <h3 class="lang-en">Asset Search</h3>
+            <h3 class="lang-ms">Pengesanan Aset</h3>
+            <p class="lang-en">Tracing properties, financial interests and linked assets.</p>
+            <p class="lang-ms">Menjejaki hartanah, kepentingan kewangan dan aset berkaitan.</p>
+            <button class="tag-btn lang-en" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.bU5Ntwa21yfJYlaoGUQOKwHaFK?w=259&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Asset Image&quot;>Tracing and identification of assets owned by an individual or company. This includes properties, vehicles, business interests and financial connections, conducted through legal and investigative methods.')">CLICK THIS BUTTON</button>
+            <button class="tag-btn lang-ms" onclick="showModal('<br><img src=&quot;https://th.bing.com/th/id/OIP.bU5Ntwa21yfJYlaoGUQOKwHaFK?w=259&h=180&c=7&r=0&o=7&dpr=1.1&pid=1.7&rm=3; alt=&quot;Pengesanan Aset\'>Menjejaki dan mengenal pasti aset yang dimiliki oleh individu atau syarikat. Ini termasuk hartanah, kenderaan, kepentingan perniagaan dan hubungan kewangan, dijalankan melalui kaedah undang-undang dan penyiasatan.')">TEKAN BUTANG INI</button>
+        </div>
+
+    </div>
+</main>
+
+<div id="textModal">
+    <div id="modalContent">
+        <span class="closeBtn" onclick="closeModal()">&times;</span>
+        <p id="modalText"></p>
+    </div>
+</div>
+
+<footer>
+    &copy; 2024 Blackline Intelligence Group.
+    <span class="lang-en">All rights reserved.</span>
+    <span class="lang-ms">Hak cipta terpelihara.</span>
+</footer>
+
+<script>
+    function toggleLanguage() {
+        document.body.classList.toggle('ms-active');
+    }
+
+    function showModal(text) {
+        document.getElementById('modalText').innerHTML = text;
+        document.getElementById('textModal').style.display = 'flex';
+
+        const content = document.getElementById('modalContent');
+        content.style.animation = 'none';
+        void content.offsetWidth;
+        content.style.animation = 'fadeInScale 0.3s ease forwards';
+    }
+
+    function closeModal() {
+        document.getElementById('textModal').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
