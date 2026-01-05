@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackline Intelligence | Gallery</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Lexend+Deca:wght@700&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
      <link rel="icon" type="image/png" href="https://i.postimg.cc/K88PbVBs/image.png">
     <style>
         :root {
@@ -107,7 +108,92 @@
         body.ms-active .lang-en { display: none; }
         body.ms-active .lang-ms { display: block; }
 
-        footer { padding: 40px 8%; border-top: 1px solid var(--border-color); text-align: center; color: var(--text-dim); font-size: 0.8rem; }
+         footer {
+            background-color: var(--bg-card); /* Warna gelap ikut kod asal */
+            padding: 60px 8% 20px 8%;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-main);
+            text-align: left; /* Tukar ke left untuk gaya kolum */
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Lexend Deca', sans-serif;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        .footer-column p, .footer-column ul {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-column ul li a {
+            color: var(--text-dim);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--accent-blue);
+        }
+
+        .contact-info i {
+            color: var(--accent-blue);
+            margin-right: 10px;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+        /* Container untuk ikon sosial */
+.social-links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-start; /* Rapat ke kiri ikut design gambar */
+    gap: 12px; 
+}
+
+/* Gaya ikon bulat */
+.footer-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #2563eb; /* Warna hijau gelap asal anda */
+    color: #cad2c5; 
+    text-decoration: none;
+    font-size: 1rem;
+    transition: transform 0.5s ease-out, background-color 0.3s;
+}
+
+/* Effect berpusing 360 darjah apabila mouse lalu */
+.footer-icon:hover {
+    background-color: #52796f; 
+    transform: rotate(360deg) scale(1.1);
+    color: white;
+}
     </style>
 </head>
 <body>
@@ -116,12 +202,12 @@
         <div class="logo">BLACKLINE <span>INTELLIGENCE</span></div>
         <div class="nav-links">
             <a href="index.html" class="lang-en">About Us</a><a href="index.html" class="lang-ms">Tentang Kami</a>
-        <a href="services.html" class="lang-en">Services</a><a href="services.html" class="lang-ms">Perkhidmatan</a>
-        <a href="organizational.html" class="lang-en">Organization</a><a href="organization.html" class="lang-ms">Organisasi</a>
-        <a href="gallery.html" class="lang-en">Gallery</a><a href="gallery.html" class="lang-ms">Galeri</a>
-        <a href="payment.html" class="lang-en">Payment</a><a href="payment.html" class="lang-ms">Bayaran</a>
-        <a href="contact.html" class="lang-en">Contact</a><a href="contact.html" class="lang-ms">Hubungi</a>
-        <button class="lang-switch" onclick="toggleLanguage()">BM / EN</button>
+            <a href="services.html" class="lang-en">Services</a><a href="services.html" class="lang-ms">Perkhidmatan</a>
+            <a href="organizational.html" class="lang-en">Organization</a><a href="organizational.html" class="lang-ms">Organisasi</a>
+            <a href="gallery.html" class="lang-en">Gallery</a><a href="gallery.html" class="lang-ms">Galeri</a>
+            <a href="payment.html" class="lang-en">Payment</a><a href="payment.html" class="lang-ms">Bayaran</a>
+            <a href="contact.html" class="lang-en">Contact</a><a href="contact.html" class="lang-ms">Hubungi</a>
+            <button class="lang-switch" onclick="toggleLanguage()">BM / EN</button>
         </div>
     </nav>
 
@@ -169,18 +255,62 @@
     </main>
 
     <footer>
-        &copy; 2026 Blackline Intelligence Group. 
-        <span class="lang-en">All rights reserved.</span>
-        <span class="lang-ms">Hak cipta terpelihara.</span>
+        <div class="footer-container">
+            <div class="footer-column">
+    <div class="logo" style="margin-bottom: 20px;">BLACKLINE <span>INTELLIGENCE</span></div>
+    <p class="lang-en">Providing high-stakes intelligence and corporate risk mitigation with absolute precision and integrity.</p>
+    <p class="lang-ms">Menyediakan perisikan berisiko tinggi dan pengurangan risiko korporat dengan ketepatan dan integriti mutlak.</p>
+    
+    <div class="social-links">
+         <a href="https://www.instagram.com/blackline.intelligence?igsh=MWgyaXExb2Zlend0bw==" target="_blank" class="footer-icon instagram-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@blackline.intelli?_r=1&_t=ZS-92oysur1LnE" target="_blank" class="footer-icon tiktok-icon">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/share/1PEdy17Mew/" target="_blank" class="footer-icon facebook-icon">
+            <i class="fab fa-facebook"></i>
+        </a>
+       
+    </div>
+</div>
+            
+
+            <div class="footer-column">
+                <h3 class="lang-en">Quick Links</h3>
+                <h3 class="lang-ms">Pautan Pantas</h3>
+                <ul>
+                    <li><a href="index.html" class="lang-en">About Us</a></li> <li><a href="index.html" class="lang-ms">Tentang Kami</a></li>
+                    <li><a href="services.html"class="lang-en">Services </a></li> <li><a href="services.html"class="lang-ms">Perkhidmatan</a></li>
+                    <li><a href="organizational.html" class="lang-en">Organization </a></li> <li><a href="organizational.html" class="lang-ms"> Organisasi</a></li>
+                    <li><a href="gallery.html" class="lang-en">Gallery</a></li>  <li><a href="gallery.html" class="lang-ms"> Galeri</a></li>
+                    <li><a href="contact.html" class="lang-en">Contact</a></li>  <li><a href="contact.html"class="lang-ms">Hubungi</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column contact-info">
+                <h3 class="lang-en">Contact Us</h3>
+                <h3 class="lang-ms">Hubungi Kami</h3>
+                <p>📍 UiTM Merbok, Kedah / Kuala Lumpur</p>
+                <p>📞 03-1234 5678</p>
+                <p>📱 012-345 6789</p>
+                <p>✉️ info@blacklineintelligence.com</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            
+             © 2026 Blackline Intelligence Group. 
+            <span class="lang-en">All rights reserved.</span>
+            <span class="lang-ms">Hak cipta terpelihara.</span>
+        </div>
     </footer>
+
 
     <script>
         function toggleLanguage() {
             document.body.classList.toggle('ms-active');
         }
-    
     </script>
 </body>
-
 </html>
-
