@@ -20,7 +20,7 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
 
         /* Navigation */
-       nav {
+        nav {
             padding: 20px 5%;
             display: flex;
             justify-content: space-between;
@@ -33,12 +33,11 @@
         }
 
         .nav-links {
-    display: flex;
-    align-items: center;
-    /* Pastikan menu tak jatuh ke bawah */
-    flex-wrap: nowrap; 
-    gap: 15px; 
-}
+            display: flex;
+            align-items: center;
+            flex-wrap: nowrap; 
+            gap: 15px; 
+        }
 
         .logo { font-family: 'Lexend Deca', sans-serif; font-size: 1.2rem; color: #fff; }
         .logo span { color: var(--accent-blue); }
@@ -46,7 +45,6 @@
         .nav-links a { color: var(--text-dim); text-decoration: none; margin-left: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
         .nav-links a:hover { color: var(--accent-blue); }
 
-    
         .btn {
             display: inline-block;
             margin-top: 30px;
@@ -81,7 +79,7 @@
 
         .card { background: var(--bg-card); padding: 40px; border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 60px; text-align: center; }
 
-        /* Grid System for Values & Why Us */
+        /* Grid System for Mission/Vision/Values */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -99,8 +97,13 @@
 
         .grid-item:hover { border-color: var(--accent-blue); }
 
-        .grid-item h3 { color: var(--accent-blue); margin-bottom: 15px; font-size: 1.2rem; }
-        .grid-item p { font-size: 0.9rem; color: var(--text-dim); }
+        .grid-item h3 { color: var(--accent-blue); margin-bottom: 15px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .grid-item p, .grid-item li { font-size: 0.9rem; color: var(--text-dim); }
+        
+        /* Objectives List Styling */
+        .obj-list { list-style: none; text-align: left; }
+        .obj-list li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        .obj-list li::before { content: "•"; color: var(--accent-blue); position: absolute; left: 0; font-weight: bold; }
 
         .sub-heading { text-align: center; margin-top: 60px; font-size: 1.8rem; }
 
@@ -138,6 +141,41 @@
         <div class="card">
             <p class="lang-en">Blackline Intelligence is a discreet and professional private investigation agency committed to uncovering the truth with precision and integrity. We specialize in intelligence gathering, surveillance, and detailed investigative services to support individuals, legal teams, and organizations. With a focus on confidentiality, accuracy, and ethical practice, Blackline Intelligence draws a clear line between uncertainty and verified facts.</p>
             <p class="lang-ms">Blackline Intelligence adalah agensi penyiasatan persendirian yang diskret dan profesional, komited untuk mendedahkan kebenaran dengan ketepatan dan integriti. Kami pakar dalam pengumpulan maklumat perisikan, pengawasan, dan perkhidmatan penyiasatan terperinci untuk menyokong individu, pasukan undang-undang, dan organisasi. Dengan fokus pada kerahsiaan dan amalan beretika, kami menarik garis jelas antara ketidakpastian dan fakta yang disahkan.</p>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid-item">
+                <h3 class="lang-en">Mission</h3>
+                <h3 class="lang-ms">Misi</h3>
+                <p class="lang-en">To provide accurate, ethical, and confidential investigative services that enable clients to make informed decisions while maintaining trust and professionalism.</p>
+                <p class="lang-ms">Menyediakan perkhidmatan penyiasatan yang tepat, beretika, dan sulit yang membolehkan pelanggan membuat keputusan termaklum sambil mengekalkan kepercayaan dan profesionalisme.</p>
+            </div>
+            <div class="grid-item">
+                <h3 class="lang-en">Vision</h3>
+                <h3 class="lang-ms">Visi</h3>
+                <p class="lang-en">To be recognized as a leading provider of reliable and ethical investigative services, setting standards for professionalism and client confidence.</p>
+                <p class="lang-ms">Dikenali sebagai penyedia terkemuka perkhidmatan penyiasatan yang boleh dipercayai dan beretika, menetapkan standard untuk profesionalisme dan keyakinan pelanggan.</p>
+            </div>
+        </div>
+
+        <h2 class="sub-heading lang-en">Our Objectives</h2>
+        <h2 class="sub-heading lang-ms">Objektif Kami</h2>
+        
+        <div class="grid-container" style="grid-template-columns: 1fr;">
+            <div class="grid-item" style="text-align: left;">
+                <ul class="obj-list lang-en">
+                    <li>Deliver accurate and well-documented investigative reports</li>
+                    <li>Ensure strict confidentiality and discretion</li>
+                    <li>Operate within legal and ethical boundaries</li>
+                    <li>Cater to both personal and corporate investigative needs</li>
+                </ul>
+                <ul class="obj-list lang-ms">
+                    <li>Menyampaikan laporan penyiasatan yang tepat dan didokumentasikan dengan baik</li>
+                    <li>Memastikan kerahsiaan dan budi bicara yang ketat</li>
+                    <li>Beroperasi dalam sempadan undang-undang dan etika</li>
+                    <li>Memenuhi keperluan penyiasatan peribadi dan korporat</li>
+                </ul>
+            </div>
         </div>
 
         <h2 class="sub-heading lang-en">Our Core Values</h2>
@@ -184,5 +222,4 @@
         }
     </script>
 </body>
-
 </html>
