@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blackline Intelligence | Secure Payment</title>
+    <title>Blackline Intelligence | Secure Checkout</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Lexend+Deca:wght@700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-     <link rel="icon" type="image/png" href="https://i.postimg.cc/K88PbVBs/image.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/K88PbVBs/image.png">
+    
     <style>
         :root {
             --bg-dark: #0a0a0b;
@@ -19,11 +20,15 @@
             --success: #10b981;
         }
 
+        /* Language Switching Logic */
+        .lang-ms { display: none; }
+        body.ms-active .lang-en { display: none; }
+        body.ms-active .lang-ms { display: block; }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
 
-        /* Navigation */
-         nav {
+        nav {
             padding: 20px 5%;
             display: flex;
             justify-content: space-between;
@@ -32,95 +37,61 @@
             border-bottom: 1px solid var(--border-color);
             position: sticky; top: 0; z-index: 1000;
             width: 100%;
-            box-sizing: border-box;
         }
 
-        .nav-links {
+ .nav-links {
             display: flex;
             align-items: center;
             flex-wrap: nowrap; 
             gap: 15px; 
         }
+        
         .logo { font-family: 'Lexend Deca', sans-serif; font-size: 1.2rem; color: #fff; text-decoration: none; }
         .logo span { color: var(--accent-blue); }
+        .nav-links { display: flex; align-items: center; gap: 15px; }
         .nav-links a { color: var(--text-dim); text-decoration: none; margin-left: 20px; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; transition: 0.3s; }
         .nav-links a:hover { color: var(--accent-blue); }
         .lang-switch { background: var(--accent-blue); color: white; border: none; padding: 5px 12px; cursor: pointer; font-size: 0.8rem; border-radius: 4px; margin-left: 20px; font-weight: 600; }
 
-        /* Main Layout */
-        main { padding: 60px 5%; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 40px; }
-        .section-title h1 { font-size: 2.5rem; font-family: 'Lexend Deca'; margin-bottom: 10px; }
-        .section-title p { color: var(--text-dim); }
-
-        .checkout-container { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
-
-        /* Service Cards */
-        .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .service-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .service-card:hover { border-color: var(--accent-blue); transform: translateY(-2px); }
-        .service-card.selected { border-color: var(--accent-blue); background: rgba(37, 99, 235, 0.05); }
+        main { padding: 40px 5%; max-width: 1200px; margin: 0 auto; min-height: 80vh; }
+        .gateway-header { text-align: center; margin-bottom: 40px; }
+        .gateway-header h1 { font-family: 'Lexend Deca'; font-size: 2.2rem; margin-bottom: 10px; color: #fff; }
         
-        .checkbox-indicator {
-            width: 18px; height: 18px; border: 2px solid var(--border-color); border-radius: 4px;
-            float: left; margin-right: 12px; margin-top: 3px;
-        }
-        .selected .checkbox-indicator { background: var(--accent-blue); border-color: var(--accent-blue); position: relative; }
-        .selected .checkbox-indicator::after { content: '✓'; color: white; font-size: 12px; position: absolute; left: 2px; top: -2px; }
+        .main-content { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; }
+        .services-list { background: var(--bg-card); padding: 25px; border-radius: 12px; border: 1px solid var(--border-color); max-height: 800px; overflow-y: auto; }
 
-        .service-card h3 { font-size: 1rem; margin-bottom: 5px; color: #fff; }
-        .service-card p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; margin-bottom: 10px; }
-        .price-tag { font-weight: 700; color: var(--accent-blue); font-size: 0.9rem; }
+        .service-card { display: flex; gap: 15px; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; margin-bottom: 12px; cursor: pointer; transition: 0.3s; background: rgba(255,255,255,0.02); }
+        .service-card:hover { border-color: var(--accent-blue); }
+        .service-card.selected { border-color: var(--accent-blue); background: rgba(37, 99, 235, 0.08); }
 
-        /* Payment Panel */
-        .payment-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 30px; position: sticky; top: 100px; }
-        .summary-box { margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
-        .summary-title { font-weight: 700; margin-bottom: 15px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
-        .summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; }
-        .total-row { border-top: 1px solid var(--border-color); margin-top: 15px; padding-top: 15px; color: #fff; font-weight: 800; font-size: 1.1rem; }
+        .checkbox-box { width: 22px; height: 22px; border: 2px solid var(--border-color); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .selected .checkbox-box { background: var(--accent-blue); border-color: var(--accent-blue); }
+        .selected .checkbox-box::after { content: '✓'; color: white; font-weight: bold; font-size: 14px; }
 
-        /* Forms */
+        .service-info h3 { font-size: 1rem; color: #fff; margin-bottom: 4px; }
+        .service-info p { font-size: 0.85rem; color: var(--text-dim); }
+        .price-badge { font-weight: bold; color: var(--accent-blue); display: block; margin-top: 5px; font-size: 0.9rem; }
+
+        .payment-panel { padding: 25px; background: var(--bg-card); border-radius: 12px; border: 1px solid var(--border-color); position: sticky; top: 100px; height: fit-content; }
+        .summary-box { margin-bottom: 25px; }
+        .summary-title { font-weight: 700; margin-bottom: 15px; text-transform: uppercase; font-size: 0.85rem; color: var(--text-dim); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .summary-row { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 8px; color: var(--text-main); }
+        .total-row { border-top: 1px solid var(--border-color); margin-top: 15px; padding-top: 15px; font-weight: 800; font-size: 1.1rem; color: #fff; }
+
         .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
-        input, select { 
-            width: 100%; padding: 12px; background: #000; border: 1px solid var(--border-color); 
-            border-radius: 6px; color: #fff; font-family: inherit; font-size: 0.9rem;
-        }
-        input:focus { outline: none; border-color: var(--accent-blue); }
+        label { font-size: 0.7rem; font-weight: 700; display: block; margin-bottom: 5px; color: var(--text-dim); text-transform: uppercase; }
+        input, select { width: 100%; padding: 12px; background: #000; border: 1px solid var(--border-color); border-radius: 6px; color: #fff; font-size: 0.9rem; }
 
-        .btn-pay {
-            width: 100%; padding: 16px; background: var(--accent-blue); color: white; border: none;
-            border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 10px;
-        }
-        .btn-pay:hover:not(:disabled) { background: var(--accent-hover); }
-        .btn-pay:disabled { background: #27272a; color: #52525b; cursor: not-allowed; }
+        .btn-submit { width: 100%; padding: 16px; background: var(--accent-blue); color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        .btn-submit:disabled { background: var(--border-color); color: #52525b; cursor: not-allowed; }
 
-        /* States */
         #loading, #success-ui { display: none; text-align: center; padding: 20px; }
-        .receipt { text-align: left; background: #000; border: 1px dashed var(--border-color); padding: 20px; font-family: monospace; font-size: 0.85rem; margin: 20px 0; color: #fff; }
-
-        @media (max-width: 900px) {
-            .checkout-container { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Language Toggle Logic */
-        .lang-ms { display: none; }
-        body.ms-active .lang-en { display: none; }
-        body.ms-active .lang-ms { display: block; }
+        .receipt { text-align: left; border: 1px dashed var(--border-color); padding: 20px; background: #000; margin-top: 20px; font-family: monospace; font-size: 0.85rem; color: #fff; }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .spinner { border: 3px solid #1a1a1a; border-top: 3px solid var(--accent-blue); border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 15px; }
-    
-        footer {
+        @media (max-width: 900px) { .main-content { grid-template-columns: 1fr; } }
+   
+    footer {
             background-color: var(--bg-card); /* Warna gelap ikut kod asal */
             padding: 60px 8% 20px 8%;
             border-top: 1px solid var(--border-color);
@@ -207,14 +178,15 @@
     color: white;
 }
     
-    </style>
+   
+   </style>
 </head>
-<body class="">
+<body>
 
     <nav>
         <a href="index.html" class="logo">BLACKLINE <span>INTELLIGENCE</span></a>
         <div class="nav-links">
-            <a href="index.html" class="lang-en">About Us</a><a href="index.html" class="lang-ms">Tentang Kami</a>
+             <a href="index.html" class="lang-en">About Us</a><a href="index.html" class="lang-ms">Tentang Kami</a>
             <a href="services.html" class="lang-en">Services</a><a href="services.html" class="lang-ms">Perkhidmatan</a>
             <a href="organizational.html" class="lang-en">Organization</a><a href="organizational.html" class="lang-ms">Organisasi</a>
             <a href="gallery.html" class="lang-en">Gallery</a><a href="gallery.html" class="lang-ms">Galeri</a>
@@ -225,86 +197,96 @@
     </nav>
 
     <main>
-        <div class="section-title">
-            <h1 class="lang-en">SECURE BILLING</h1>
-            <h1 class="lang-ms">BAYARAN SELAMAT</h1>
-            <p class="lang-en">Select investigation services to proceed with payment</p>
-            <p class="lang-ms">Pilih perkhidmatan penyiasatan untuk meneruskan pembayaran</p>
+        <div class="gateway-header">
+            <h1>
+                <span class="lang-en">🔍 SECURE BILLING PORTAL</span>
+                <span class="lang-ms">🔍 PORTAL PEMBAYARAN SELAMAT</span>
+            </h1>
+            <p style="color: var(--text-dim)">
+                <span class="lang-en">Select services according to your investigation needs</span>
+                <span class="lang-ms">Pilih perkhidmatan mengikut keperluan penyiasatan anda</span>
+            </p>
         </div>
 
-        <div class="checkout-container">
-            <div class="services-grid" id="servicesArea">
-                <div class="service-card" onclick="toggleService(this, 'Background Investigation', 1500)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Background Investigation</h3>
+        <div class="main-content">
+            <div class="services-list" id="servicesArea">
+                <div class="service-card" onclick="toggleService(this, 'Background Investigation', 1500, 'Siasatan Latar Belakang')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                         <h3 class="lang-en">Background Investigation</h3>
                      <h3 class="lang-ms">Siasatan Latar Belakang</h3>
                     <p class="lang-en">Criminal, employment, and financial status verification.</p>
                     <p class="lang-ms">Pengesahan status jenayah, pekerjaan, dan kewangan.</p>
-                    <div class="price-tag">RM 1,500.00</div>
+                    <div class="price-badge">RM 1,500.00</div>
+                    </div>
                 </div>
-                <div class="service-card" onclick="toggleService(this, 'Surveillance Services', 2500)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Surveillance Services</h3>
-                    <h3 class="lang-ms">Perkhidmatan Pengawasan</h3>
-                    <p class="lang-en">8-hour monitoring with high-quality photo/video evidence.</p>
-                    <p class="lang-ms">Pemantauan 8 jam dengan bukti foto/video berkualiti tinggi.</p>
-                    <div class="price-tag">RM 2,500.00</div>
+
+                <div class="service-card" onclick="toggleService(this, 'Surveillance Services', 2500, 'Perkhidmatan Pengawasan')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                        <h3><span class="lang-en">Surveillance Services</span><span class="lang-ms">Perkhidmatan Pengawasan</span></h3>
+                        <p><span class="lang-en">8-hour monitoring with photo/video evidence.</span><span class="lang-ms">Pemantauan 8 jam dengan bukti foto/video.</span></p>
+                        <span class="price-badge">RM 2,500.00</span>
+                    </div>
                 </div>
-                <div class="service-card" onclick="toggleService(this, 'Matrimonial Investigation', 3000)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Matrimonial Investigation</h3>
-                     <h3 class="lang-ms">Siasatan Perkahwinan</h3>
-                    <p class="lang-en">Infidelity checks and lifestyle analysis (discreet).</p>
-                    <p class="lang-ms">Semakan kecurangan dan analisis gaya hidup (sulit).</p>
-                    <div class="price-tag">RM 3,000.00</div>
+
+                <div class="service-card" onclick="toggleService(this, 'Matrimonial Investigation', 3000, 'Siasatan Perkahwinan')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                        <h3><span class="lang-en">Matrimonial Investigation</span><span class="lang-ms">Siasatan Perkahwinan</span></h3>
+                        <p><span class="lang-en">Infidelity checks and lifestyle analysis (discreet).</span><span class="lang-ms">Semakan kecurangan dan analisis gaya hidup (sulit).</span></p>
+                        <span class="price-badge">RM 3,000.00</span>
+                    </div>
                 </div>
-                <div class="service-card" onclick="toggleService(this, 'Corporate Investigation', 4000)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Corporate Investigation</h3>
-                   <h3 class="lang-ms">Siasatan Korporat</h3>
-                    <p class="lang-en">Fraud detection and employee misconduct verification.</p>
-                    <p class="lang-ms">Pengesanan penipuan dan pengesahan salah laku pekerja.</p>
-                    <div class="price-tag">RM 4,000.00</div>
+
+                <div class="service-card" onclick="toggleService(this, 'Corporate Investigation', 4000, 'Siasatan Korporat')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                        <h3><span class="lang-en">Corporate Investigation</span><span class="lang-ms">Siasatan Korporat</span></h3>
+                        <p><span class="lang-en">Fraud detection and employee misconduct verification.</span><span class="lang-ms">Pengesanan penipuan dan pengesahan salah laku pekerja.</span></p>
+                        <span class="price-badge">RM 4,000.00</span>
+                    </div>
                 </div>
-                <div class="service-card" onclick="toggleService(this, 'Cyber Investigation', 5000)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Cyber Investigation</h3>
-                    <h3 class="lang-ms">Siasatan Siber</h3>
-                    <p class="lang-en">Digital forensics, stalking, and online fraud detection.</p>
-                    <p class="lang-ms">Forensik digital, hendap, dan pengesanan penipuan dalam talian.</p>
-                    <div class="price-tag">RM 5,000.00</div>
+
+                <div class="service-card" onclick="toggleService(this, 'Asset Search', 2000, 'Carian Aset')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                        <h3><span class="lang-en">Asset Search</span><span class="lang-ms">Carian Aset</span></h3>
+                        <p><span class="lang-en">Tracking of properties and bank accounts.</span><span class="lang-ms">Menjejaki hartanah dan akaun bank.</span></p>
+                        <span class="price-badge">RM 2,000.00</span>
+                    </div>
                 </div>
-                <div class="service-card" onclick="toggleService(this, 'Asset Search', 2000)">
-                    <div class="checkbox-indicator"></div>
-                    <h3 class="lang-en">Asset Search</h3>
-                    <h3 class="lang-ms">Pencarian Aset</h3>
-                    <p class="lang-en">Tracking of properties, bank accounts, and interests.</p>
-                    <p class="lang-ms">Penjejakan hartanah, akaun bank, dan kepentingan.</p>
-                    <div class="price-tag">RM 2,000.00</div>
+
+                <div class="service-card" onclick="toggleService(this, 'Cyber Investigation', 5000, 'Siasatan Siber')">
+                    <div class="checkbox-box"></div>
+                    <div class="service-info">
+                        <h3><span class="lang-en">Cyber Investigation</span><span class="lang-ms">Siasatan Siber</span></h3>
+                        <p><span class="lang-en">Digital forensics and online fraud detection.</span><span class="lang-ms">Forensik digital dan pengesanan penipuan dalam talian.</span></p>
+                        <span class="price-badge">RM 5,000.00</span>
+                    </div>
                 </div>
             </div>
 
             <div class="payment-panel">
                 <div id="payment-form-ui">
                     <div class="summary-box">
-                        <div class="summary-title lang-en">Order Summary</div>
-                        <div class="summary-title lang-ms">Ringkasan Pesanan</div>
+                        <div class="summary-title"><span class="lang-en">Order Summary</span><span class="lang-ms">Ringkasan Pesanan</span></div>
                         <div id="cart-items">
-                            <p class="lang-en" style="font-size: 0.8rem; color: var(--text-dim);">No services selected</p>
-                            <p class="lang-ms" style="font-size: 0.8rem; color: var(--text-dim);">Tiada perkhidmatan dipilih</p>
+                            <p style="font-size: 13px; color: var(--text-dim);" class="lang-en">No services selected</p>
+                            <p style="font-size: 13px; color: var(--text-dim);" class="lang-ms">Tiada servis dipilih</p>
                         </div>
                         
-                        <div class="total-section">
+                        <div style="margin-top: 15px;">
                             <div class="summary-row">
-                                <span class="lang-en">Subtotal</span><span class="lang-ms">Subjumlah</span>
+                                <span>Subtotal</span>
                                 <span id="sub-total">RM 0.00</span>
                             </div>
-                            <div class="summary-row" style="color: var(--text-dim);">
+                            <div class="summary-row">
                                 <span>SST (6%)</span>
                                 <span id="tax-amount">RM 0.00</span>
                             </div>
                             <div class="summary-row total-row">
-                                <span class="lang-en">Total Amount</span><span class="lang-ms">Jumlah Keseluruhan</span>
+                                <span><span class="lang-en">Total Amount</span><span class="lang-ms">Jumlah Keseluruhan</span></span>
                                 <span id="grand-total">RM 0.00</span>
                             </div>
                         </div>
@@ -312,15 +294,15 @@
 
                     <form id="mainForm">
                         <div class="form-group">
-                            <label class="lang-en">Full Name</label><label class="lang-ms">Nama Penuh</label>
+                             <label class="lang-en">Full Name</label><label class="lang-ms">Nama Penuh</label>
                             <input type="text" id="custName" required placeholder="As per ID">
                         </div>
                         <div class="form-group">
-                            <label class="lang-en">Email Address</label><label class="lang-ms">Alamat Emel</label>
+                            <label><span class="lang-en">Email Address</span><span class="lang-ms">Alamat Emel</span></label>
                             <input type="email" id="custEmail" required placeholder="For official receipt">
                         </div>
                         <div class="form-group">
-                            <label class="lang-en">Payment Bank</label><label class="lang-ms">Bank Pembayaran</label>
+                            <label><span class="lang-en">Payment Bank</span><span class="lang-ms">Bank Pembayaran</span></label>
                             <select id="custBank" required>
                                 <option value="" class="lang-en">Select Bank</option>
                                 <option value="" class="lang-ms">Pilih Bank</option>
@@ -328,38 +310,37 @@
                                 <option value="CIMB">CIMB Clicks</option>
                                 <option value="Public Bank">Public Bank</option>
                                 <option value="RHB">RHB Now</option>
+                                <option value="BIMB">Bank Islam</option>
+                                <option value="BSN">Bank Nasional</option>
+                                <option value="AMBANK">Am Bank</option>
+                                <option value="Agro">Agro Bank</option>
                             </select>
                         </div>
-                        <button type="button" class="btn-pay" id="submitBtn" disabled onclick="submitPayment()">
-                            <span class="lang-en">Select Service to Pay</span>
-                            <span class="lang-ms">Pilih Perkhidmatan Untuk Bayar</span>
+                        <button type="button" class="btn-submit" id="submitBtn" disabled onclick="submitToGetform()">
+                            Please Select Service
                         </button>
+                         
                     </form>
                 </div>
 
                 <div id="loading">
-                    <div class="spinner"></div>
-                    <p class="lang-en">Verifying with Bank Gateway...</p>
-                    <p class="lang-ms">Mengesahkan dengan Gerbang Bank...</p>
+                    <div style="border: 3px solid #1a1a1a; border-top: 3px solid var(--accent-blue); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
+                    <p><span class="lang-en">Processing transaction...</span><span class="lang-ms">Memproses transaksi...</span></p>
                 </div>
 
                 <div id="success-ui">
-                    <div style="font-size: 3rem; color: var(--success); margin-bottom: 10px;">✓</div>
-                    <h2 class="lang-en" style="color: #fff;">Transaction Secure</h2>
-                    <h2 class="lang-ms" style="color: #fff;">Transaksi Selamat</h2>
+                    <h2 style="color: var(--success);"><span class="lang-en">Payment Successful</span><span class="lang-ms">Pembayaran Berjaya</span></h2>
                     <div class="receipt" id="finalReceipt"></div>
-                    <button class="btn-pay" onclick="window.print()">
-                        <span class="lang-en">Print Receipt</span><span class="lang-ms">Cetak Resit</span>
-                    </button>
-                    <button class="btn-pay" style="background:#27272a; margin-top:10px;" onclick="location.reload()">
-                        <span class="lang-en">New Payment</span><span class="lang-ms">Bayaran Baru</span>
+                    <button class="btn-submit" onclick="window.print()"><span class="lang-en">Print Receipt</span><span class="lang-ms">Cetak Resit</span></button>
+                    <button class="btn-submit" style="background:var(--border-color); margin-top:10px;" onclick="location.reload()">
+                        <span class="lang-en">Start New Order</span><span class="lang-ms">Pesanan Baru</span>
                     </button>
                 </div>
             </div>
         </div>
     </main>
 
-     <footer>
+    <footer>
         <div class="footer-container">
             <div class="footer-column">
     <div class="logo" style="margin-bottom: 20px;">BLACKLINE <span>INTELLIGENCE</span></div>
@@ -418,79 +399,76 @@
 
         function toggleLanguage() {
             document.body.classList.toggle('ms-active');
-            updateUI(); // Refresh placeholders and button text
+            calculatePrices();
         }
 
-        function toggleService(element, name, price) {
+        function toggleService(element, nameEn, price, nameMs) {
             element.classList.toggle('selected');
-            const index = selectedCart.findIndex(item => item.name === name);
+            const index = selectedCart.findIndex(item => item.nameEn === nameEn);
 
             if (index > -1) {
                 selectedCart.splice(index, 1);
                 currentSubtotal -= price;
             } else {
-                selectedCart.push({ name, price });
+                selectedCart.push({ nameEn, nameMs, price });
                 currentSubtotal += price;
             }
-            updateUI();
+            calculatePrices();
         }
 
-        function updateUI() {
-            const isMs = document.body.classList.contains('ms-active');
+        function calculatePrices() {
             const tax = currentSubtotal * 0.06;
             const total = currentSubtotal + tax;
+            const isMs = document.body.classList.contains('ms-active');
 
-            // Update placeholders
             document.getElementById('custName').placeholder = isMs ? "Seperti dalam IC" : "As per ID";
             document.getElementById('custEmail').placeholder = isMs ? "Untuk resit rasmi" : "For official receipt";
-
+ 
             document.getElementById('sub-total').innerText = `RM ${currentSubtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
             document.getElementById('tax-amount').innerText = `RM ${tax.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            const totalStr = `RM ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-            document.getElementById('grand-total').innerText = totalStr;
-
+            document.getElementById('grand-total').innerText = `RM ${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+       
+        
             const cartDiv = document.getElementById('cart-items');
             const submitBtn = document.getElementById('submitBtn');
 
             if (selectedCart.length === 0) {
                 cartDiv.innerHTML = isMs ? 
-                    '<p class="lang-ms" style="font-size: 0.8rem; color: var(--text-dim); display:block;">Tiada perkhidmatan dipilih</p>' : 
-                    '<p class="lang-en" style="font-size: 0.8rem; color: var(--text-dim); display:block;">No services selected</p>';
+                    '<p style="font-size: 13px; color: var(--text-dim);">Tiada servis dipilih</p>' : 
+                    '<p style="font-size: 13px; color: var(--text-dim);">No services selected</p>';
                 submitBtn.disabled = true;
-                submitBtn.innerHTML = isMs ? 'Pilih Perkhidmatan Untuk Bayar' : 'Select Service to Pay';
+                submitBtn.innerText = isMs ? "Sila Pilih Perkhidmatan" : "Please Select Service";
             } else {
                 cartDiv.innerHTML = selectedCart.map(item => `
                     <div class="summary-row">
-                        <span style="color: #fff">${item.name}</span>
+                        <span>${isMs ? item.nameMs : item.nameEn}</span>
                         <span>RM ${item.price.toFixed(2)}</span>
                     </div>
                 `).join('');
                 submitBtn.disabled = false;
-                submitBtn.innerText = (isMs ? `Bayar ` : `Pay `) + totalStr;
+                const totalTxt = document.getElementById('grand-total').innerText;
+                submitBtn.innerText = isMs ? `Bayar ${totalTxt}` : `Pay ${totalTxt}`;
             }
         }
 
-        async function submitPayment() {
-            const isMs = document.body.classList.contains('ms-active');
+        async function submitToGetform() {
             const name = document.getElementById('custName').value;
             const email = document.getElementById('custEmail').value;
             const bank = document.getElementById('custBank').value;
+            const isMs = document.body.classList.contains('ms-active');
 
-            if(!name || !email || !bank) {
-                return alert(isMs ? "Sila isi semua butiran." : "Please fill in all details.");
-            }
+            if(!name || !email || !bank) return alert(isMs ? "Sila isi butiran." : "Please fill details.");
 
             document.getElementById('payment-form-ui').style.display = 'none';
             document.getElementById('servicesArea').style.opacity = '0.3';
-            document.getElementById('servicesArea').style.pointerEvents = 'none';
             document.getElementById('loading').style.display = 'block';
 
             const formData = new FormData();
             formData.append("Customer", name);
             formData.append("Email", email);
             formData.append("Bank", bank);
-            formData.append("Services", selectedCart.map(i => i.name).join(', '));
-            formData.append("Grand_Total", document.getElementById('grand-total').innerText);
+            formData.append("Services", selectedCart.map(i => i.nameEn).join(', '));
+            formData.append("Total", document.getElementById('grand-total').innerText);
 
             try {
                 const response = await fetch("https://getform.io/f/agdvlmmb", {
@@ -503,15 +481,16 @@
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('success-ui').style.display = 'block';
                     
+                    const date = new Date().toLocaleString();
                     document.getElementById('finalReceipt').innerHTML = `
                         <strong>BLACKLINE INTELLIGENCE OFFICIAL RECEIPT</strong><br>
                         Ref: BLI-${Date.now().toString().slice(-6)}<br>
-                        Date: ${new Date().toLocaleString()}<br>
+                        Date: ${date}<br>
                         ------------------------------------------<br>
                         CLIENT: ${name.toUpperCase()}<br>
                         BANK: ${bank}<br>
                         ------------------------------------------<br>
-                        ${selectedCart.map(i => i.name.padEnd(25) + " RM " + i.price.toFixed(2)).join('<br>')}<br>
+                        ${selectedCart.map(i => (isMs ? i.nameMs : i.nameEn).padEnd(25) + " RM " + i.price.toFixed(2)).join('<br>')}<br>
                         ------------------------------------------<br>
                         SUBTOTAL: ${document.getElementById('sub-total').innerText}<br>
                         SST (6%): ${document.getElementById('tax-amount').innerText}<br>
@@ -521,7 +500,7 @@
                     `;
                 }
             } catch (e) {
-                alert(isMs ? "Ralat sambungan. Bayaran tertunda." : "Connection error. Payment pending.");
+                alert("Error.");
                 location.reload();
             }
         }
